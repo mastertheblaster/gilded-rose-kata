@@ -1,0 +1,14 @@
+{
+  "name": "gilded-rose-kata",
+  "version": "1.0.0",
+  "description": "",
+  "main": "src/gilded_rose.js",
+  "scripts": {
+    "test": "jasmine spec/gilded_rose.spec.js"
+  },
+  "author": "",
+  "license": "MIT",
+  "devDependencies": {
+    "jasmine": "^3.2.0"
+  }
+}
