@@ -24,47 +24,36 @@ class Shop {
   updateQuality() {
     for (var i = 0; i < this.items.length; i++) {
       const item = this.items[i];
+      if (item.name === names.SULFURAS) {
+        continue;
+      }
       if (item.name != names.BRIE && item.name != names.PASSES) {
         if (item.quality > quality.MIN) {
-          if (item.name != names.SULFURAS) {
-            item.quality = item.quality - 1;
-          }
+          item.quality = item.quality - 1;
         }
       } else {
         if (item.quality < quality.MAX) {
           item.quality = item.quality + 1;
           if (item.name == names.PASSES) {
-            if (item.sellIn < 11) {
-              if (item.quality < 50) {
-                item.quality = item.quality + 1;
-              }
+            if (item.sellIn < 11 && item.quality < quality.MAX) {
+              item.quality = item.quality + 1;
             }
-            if (item.sellIn < 6) {
-              if (item.quality < quality.MAX) {
-                item.quality = item.quality + 1;
-              }
+            if (item.sellIn < 6 && item.quality < quality.MAX) {
+              item.quality = item.quality + 1;
             }
           }
         }
       }
-      if (item.name != names.SULFURAS) {
-        item.sellIn = item.sellIn - 1;
-      }
+      item.sellIn = item.sellIn - 1;
       if (item.sellIn < 0) {
         if (item.name != names.BRIE) {
-          if (item.name != names.PASSES) {
-            if (item.quality > quality.MIN) {
-              if (item.name != names.SULFURAS) {
-                item.quality = item.quality - 1;
-              }
-            }
+          if (item.name != names.PASSES && item.quality > quality.MIN) {
+            item.quality = item.quality - 1;
           } else {
-            item.quality = item.quality - item.quality;
+            item.quality = 0;
           }
-        } else {
-          if (item.quality < quality.MAX) {
+        } else if (item.quality < quality.MAX) {
             item.quality = item.quality + 1;
-          }
         }
       }
     }
