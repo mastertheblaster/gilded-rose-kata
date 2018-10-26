@@ -6,6 +6,17 @@ class Item {
   }
 }
 
+const names = {
+  BRIE: 'Aged Brie',
+  PASSES: 'Backstage passes to a TAFKAL80ETC concert',
+  SULFURAS: 'Sulfuras, Hand of Ragnaros'
+};
+
+const quality = {
+  MIN: 0,
+  MAX: 50
+};
+
 class Shop {
   constructor(items=[]){
     this.items = items;
@@ -13,37 +24,37 @@ class Shop {
   updateQuality() {
     for (var i = 0; i < this.items.length; i++) {
       const item = this.items[i];
-      if (item.name != 'Aged Brie' && item.name != 'Backstage passes to a TAFKAL80ETC concert') {
-        if (item.quality > 0) {
-          if (item.name != 'Sulfuras, Hand of Ragnaros') {
+      if (item.name != names.BRIE && item.name != names.PASSES) {
+        if (item.quality > quality.MIN) {
+          if (item.name != names.SULFURAS) {
             item.quality = item.quality - 1;
           }
         }
       } else {
-        if (item.quality < 50) {
+        if (item.quality < quality.MAX) {
           item.quality = item.quality + 1;
-          if (item.name == 'Backstage passes to a TAFKAL80ETC concert') {
+          if (item.name == names.PASSES) {
             if (item.sellIn < 11) {
               if (item.quality < 50) {
                 item.quality = item.quality + 1;
               }
             }
             if (item.sellIn < 6) {
-              if (item.quality < 50) {
+              if (item.quality < quality.MAX) {
                 item.quality = item.quality + 1;
               }
             }
           }
         }
       }
-      if (item.name != 'Sulfuras, Hand of Ragnaros') {
+      if (item.name != names.SULFURAS) {
         item.sellIn = item.sellIn - 1;
       }
       if (item.sellIn < 0) {
-        if (item.name != 'Aged Brie') {
-          if (item.name != 'Backstage passes to a TAFKAL80ETC concert') {
-            if (item.quality > 0) {
-              if (item.name != 'Sulfuras, Hand of Ragnaros') {
+        if (item.name != names.BRIE) {
+          if (item.name != names.PASSES) {
+            if (item.quality > quality.MIN) {
+              if (item.name != names.SULFURAS) {
                 item.quality = item.quality - 1;
               }
             }
@@ -51,7 +62,7 @@ class Shop {
             item.quality = item.quality - item.quality;
           }
         } else {
-          if (item.quality < 50) {
+          if (item.quality < quality.MAX) {
             item.quality = item.quality + 1;
           }
         }
@@ -64,4 +75,4 @@ class Shop {
 
 module.exports = {
   Item, Shop
-}
+};
