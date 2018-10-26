@@ -24,33 +24,36 @@ class Shop {
   updateQuality() {
     for (var i = 0; i < this.items.length; i++) {
       const item = this.items[i];
+
       if (item.name === names.SULFURAS) {
         continue;
       }
-      if (item.name != names.BRIE && item.name != names.PASSES) {
-        item.quality = item.quality - 1;
-      } else {
-        item.quality = item.quality + 1;
-        if (item.name == names.PASSES) {
-          if (item.sellIn < 11) {
-            item.quality = item.quality + 1;
-          }
-          if (item.sellIn < 6) {
-            item.quality = item.quality + 1;
-          }
-        }
-      }
+
       item.sellIn = item.sellIn - 1;
-      if (item.sellIn < 0) {
-        if (item.name != names.BRIE) {
-          if (item.name != names.PASSES) {
-            item.quality = item.quality - 1;
-          } else {
-            item.quality = 0;
-          }
-        } else {
-            item.quality = item.quality + 1;
-        }
+      item.quality = item.quality - 2;
+
+      if (item.name === names.BRIE) {
+        item.quality = item.quality + 3;
+      }
+
+      if (item.name === names.PASSES) {
+        item.quality = item.quality + 3;
+      }
+
+      if (item.name === names.PASSES && item.sellIn < 11) {
+        item.quality = item.quality + 1;
+      }
+
+      if (item.name === names.PASSES && item.sellIn < 6) {
+        item.quality = item.quality + 1;
+      }
+
+      if (item.sellIn < 0 && item.name === names.BRIE) {
+        item.quality = item.quality + 1;
+      }
+
+      if (item.sellIn < 0 && item.name === names.PASSES) {
+        item.quality = 0;
       }
 
       item.quality = Math.max(quality.MIN, item.quality);
