@@ -28,34 +28,33 @@ class Shop {
         continue;
       }
       if (item.name != names.BRIE && item.name != names.PASSES) {
-        if (item.quality > quality.MIN) {
-          item.quality = item.quality - 1;
-        }
+        item.quality = item.quality - 1;
       } else {
-        if (item.quality < quality.MAX) {
-          item.quality = item.quality + 1;
-          if (item.name == names.PASSES) {
-            if (item.sellIn < 11 && item.quality < quality.MAX) {
-              item.quality = item.quality + 1;
-            }
-            if (item.sellIn < 6 && item.quality < quality.MAX) {
-              item.quality = item.quality + 1;
-            }
+        item.quality = item.quality + 1;
+        if (item.name == names.PASSES) {
+          if (item.sellIn < 11) {
+            item.quality = item.quality + 1;
+          }
+          if (item.sellIn < 6) {
+            item.quality = item.quality + 1;
           }
         }
       }
       item.sellIn = item.sellIn - 1;
       if (item.sellIn < 0) {
         if (item.name != names.BRIE) {
-          if (item.name != names.PASSES && item.quality > quality.MIN) {
+          if (item.name != names.PASSES) {
             item.quality = item.quality - 1;
           } else {
             item.quality = 0;
           }
-        } else if (item.quality < quality.MAX) {
+        } else {
             item.quality = item.quality + 1;
         }
       }
+
+      item.quality = Math.max(quality.MIN, item.quality);
+      item.quality = Math.min(quality.MAX, item.quality);
     }
 
     return this.items;
@@ -63,5 +62,5 @@ class Shop {
 }
 
 module.exports = {
-  Item, Shop
+  Item, Shop, names
 };

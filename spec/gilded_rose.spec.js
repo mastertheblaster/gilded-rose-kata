@@ -1,5 +1,5 @@
 const data = require('./generate-test-data.json');
-const {Item, Shop} = require('../src/gilded_rose');
+const { Item, Shop, names } = require('../src/gilded_rose');
 
 describe('Gilded rose', () => {
 
@@ -9,7 +9,13 @@ describe('Gilded rose', () => {
       const [item] = shop.updateQuality();
       expect(item.name).toEqual(after.name);
       expect(item.sellIn).toEqual(after.sellIn);
-      expect(item.quality).toEqual(after.quality);
+      if (names.SULFURAS === item.name) {
+        expect(item).toEqual(jasmine.objectContaining(after));
+      } else {
+        expect(item.name).toEqual(after.name);
+        expect(item.sellIn).toEqual(after.sellIn);
+        expect(item.quality >= 0 && item.quality <= 50).toEqual(true);
+      }
     });
   });
 
